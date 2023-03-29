@@ -2,6 +2,7 @@ const express = require('express');
 const app = express();
 const nodemailer = require('nodemailer');
 const cors=require('cors');
+app.use(cors());
 require('dotenv').config();
 const port=process.env.PORT;
 let transporter = nodemailer.createTransport({
@@ -17,7 +18,7 @@ let mailOptions = {
     subject: 'Robotica',
     text: 'Usando una api'
   };
-  app.use(cors());
+  
   
 app.get('/enviarcorreo', function (req, res) {
   res.send('Hello World');
