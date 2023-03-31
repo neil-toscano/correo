@@ -2,7 +2,6 @@ const express = require('express');
 const app = express();
 const nodemailer = require('nodemailer');
 const cors=require('cors');
-app.use(cors());
 require('dotenv').config();
 const port=process.env.PORT;
 let transporter = nodemailer.createTransport({
@@ -12,15 +11,18 @@ let transporter = nodemailer.createTransport({
     pass: '20190318A.'
   }
 });
-let mailOptions = {
-    from: 'neil.toscano.f@uni.pe',
-    to: 'jacoborosseau@gmail.com',
-    subject: 'Robotica',
-    text: 'Usando una api'
-  };
-  
+
+  app.use(cors());
   
 app.get('/enviarcorreo', function (req, res) {
+  let correo=req.query.correo;
+  let mensaje=req.query.mensaje;
+  let mailOptions = {
+    from: 'neil.toscano.f@uni.pe',
+    to: correo,
+    subject: 'Curso de Robotica Industrial',
+    text: mensaje,
+  };
   res.send('Hello World');
   transporter.sendMail(mailOptions, function(error, info){
     if (error) {
